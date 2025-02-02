@@ -1,0 +1,105 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Federal Farm Loans Applications Automation API",
+        "version": "1.0.0",
+        "description": "APIs for managing Federal FSA-2001 farm loan applications by pulling a list of open applications, identifying outstanding paperwork for each application, and sending reminders to loan applicants."
+    },
+    "paths": {
+        "/allLoanApplications": {
+            "get": {
+                "summary": "Get a list of all open loan applications",
+                "description": "Get the list of all open loan applications. Return all the loan application details",
+                "operationId": "getAllLoanApplications",
+                "responses": {
+                    "200": {
+                        "description": "Gets the list of all federal farm loan assistance applicants",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object",
+                                        "properties": {
+                                            "socialSecurityNumber": {
+                                                "type": "string",
+                                                "description": "SSN of the applicant who has filed the loan application."
+                                            },
+                                             "grandTotalAssets": {
+                                                "type": "number",
+                                                "description": "Total current Farm Assets"
+                                            },                                                                                        
+                                            "grandTotalLiabilities": {                                            
+                                                "type": "number",
+                                                "description": "Total current Farm Liabilities"
+                                            }                                           
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/loans/{socialSecurityNumber}/loan-details": {
+            "get": {
+                "summary": "Get the FSA-2001 loan application details for a specific applicant by SSN (Social Security Number)",
+                "description": "The API takes in only one SSN and returns the details for that application. This API should be called for each SSN or Social Security Number",
+                "operationId": "getLoanDetailsBySSN",
+                "parameters": [{
+                    "name": "socialSecurityNumber",
+                    "in": "path",
+                    "description": "SSN of the FSA-2001 loan applicant",
+                    "required": true,
+                    "schema": {
+                        "type": "string"
+                    }
+                }],
+                "responses": {
+                    "200": {
+                        "description": "Details of the loan applicant as captured in the FSA-2001 loan application",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "FsaLoanApplicationId": {
+                                            "type": "string",
+                                            "description": "Unique ID of the loan application."
+                                        },
+                                        "socialSecurityNumber": {
+                                            "type": "string",
+                                            "description": "SSN of the applicant who has filed the loan application."
+                                        },
+                                        "legalName": {
+                                            "type": "string",
+                                            "description": "The full legal name of the loan application"
+                                        },
+                                        "totalCurrentFarmAssets": {
+                                            "type": "number",
+                                            "description": "Total current Farm Assets"
+                                        },                                                                                        
+                                        "totalCurrentFarmLiabilities": {                                            
+                                            "type": "number",
+                                            "description": "Total current Farm Liabilities"
+                                        },
+                                         "grandTotalAssets": {
+                                            "type": "number",
+                                            "description": "Total current Farm Assets"
+                                        },                                                                                        
+                                        "grandTotalLiabilities": {                                            
+                                            "type": "number",
+                                            "description": "Total current Farm Liabilities"
+                                        }                                           
+                                    }
+                                }
+                            }
+                        }
+
+                    }
+                }
+            }
+        }
+    }
+}
