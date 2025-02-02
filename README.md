@@ -24,5 +24,5 @@ With data obtained, compare data captured in PDF to current published public pri
 Example,
 Will help determine say if the 50% yield submitted is feasible/profitable to determine Credit Note
 
-Solution will use AWS GenAI to generate the credit note results automatically using publicly available farm yield data and use it as Knowledge Bank and utilize an Calude Sonnet 3.5 model to automate approvals/rejections.
+Solution will use AWS GenAI to generate the credit note results automatically using publicly available farm yield data and use it as Knowledge Bank and utilize an Claude Sonnet 3.5 model to automate approvals/rejections.
 Capture the data and store it internally using AWS data dump in S3 or Aurora. Use of RAG with a vector database can be included for capturing data/caching/reporting etc if there’s bandwidth to add complexity to augment the use cases for reporting etc
