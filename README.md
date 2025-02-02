@@ -9,9 +9,13 @@ Use Case: US Dept of Agriculture Farm Loans Credit Approval/Risk analysis
 Leverage GenAI with automation of Agricultural Farm loans (crops/poultry) to
 
 •	Generate Credit Notes (Approve/Reject) based on some authoritative Farm yield assumptions
+
 •	Enhance productivity of Farm Loan employees saving time with data ingestion, determine loan type
+
 •	Remove bias and mathematical errors in Credit Notes calculations/reasoning
+
 •	Perform some basic form validation data  – help with data cleansing??
+
 •	Include some data visualizations/charts for historical data and insights – nice to have
 
 Implement solution using agent(s) that can scour publicly available data for Yield and price for commodities
