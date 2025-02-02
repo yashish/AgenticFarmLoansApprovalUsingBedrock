@@ -1,0 +1,145 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Federal Farm Loans Applications Automation API",
+        "version": "1.0.0",
+        "description": "APIs for managing Federal FSA-2001 farm loan applications by pulling a list of open applications, identifying outstanding paperwork for each application, and sending reminders to loan applicants."
+    },
+    "paths": {
+        "/applications": {
+            "get": {
+                "summary": "Get a list of all open loan applications",
+                "description": "Get the list of all open loan applications. Return all the open loanApplicationIds.",
+                "operationId": "getAllOpenLoanApplications",
+                "responses": {
+                    "200": {
+                        "description": "Gets the list of all open loan applications for federal farm loan assistance applicants",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object",
+                                        "properties": {
+                                            "loanApplicationId": {
+                                                "type": "string",
+                                                "description": "Unique ID of the loan application."
+                                            },
+                                            "ssn": {
+                                                "type": "string",
+                                                "description": "SSN of the applicant who has filed the loan application."
+                                            },
+                                            "applicationStatus": {
+                                                "type": "string",
+                                                "description": "The status of the loan application. Application can be in Open or Closed state"
+                                            },
+                                            "currentFarmAssets": {
+                                                "type": "number",
+                                                "description": "Total current Farm Assets"
+                                            },                                                                                        
+                                            "currentFarmLiabilities": {                                            
+                                                "type": "number",
+                                                "description": "Total current Farm Liabilities"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/claims/{claimId}/identify-missing-documents": {
+            "get": {
+                "summary": "Identify missing documents for a specific claim",
+                "description": "Get the list of pending documents that need to be uploaded by policy holder before the claim can be processed. The API takes in only one claim id and returns the list of documents that are pending to be uploaded by policy holder for that claim. This API should be called for each claim id",
+                "operationId": "identifyMissingDocuments",
+                "parameters": [{
+                    "name": "claimId",
+                    "in": "path",
+                    "description": "Unique ID of the open insurance claim",
+                    "required": true,
+                    "schema": {
+                        "type": "string"
+                    }
+                }],
+                "responses": {
+                    "200": {
+                        "description": "List of documents that are pending to be uploaded by policy holder for insurance claim",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "pendingDocuments": {
+                                            "type": "string",
+                                            "description": "The list of pending documents for the claim."
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                    }
+                }
+            }
+        },
+        "/send-reminders": {
+            "post": {
+                "summary": "API to send reminder to the customer about pending documents for open claim",
+                "description": "Send reminder to the customer about pending documents for open claim. The API takes in only one claim id and its pending documents at a time, sends the reminder and returns the tracking details for the reminder. This API should be called for each claim id you want to send reminders for.",
+                "operationId": "sendReminders",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "claimId": {
+                                        "type": "string",
+                                        "description": "Unique ID of open claims to send reminders for."
+                                    },
+                                    "pendingDocuments": {
+                                        "type": "string",
+                                        "description": "The list of pending documents for the claim."
+                                    }
+                                },
+                                "required": [
+                                    "claimId",
+                                    "pendingDocuments"
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Reminders sent successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "sendReminderTrackingId": {
+                                            "type": "string",
+                                            "description": "Unique Id to track the status of the send reminder Call"
+                                        },
+                                        "sendReminderStatus": {
+                                            "type": "string",
+                                            "description": "Status of send reminder notifications"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request. One or more required fields are missing or invalid."
+                    }
+                }
+            }
+        }
+    }
+}
