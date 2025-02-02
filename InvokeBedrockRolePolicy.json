@@ -1,0 +1,16 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [{
+        "Effect": "Allow",
+        "Action": "bedrock:InvokeModel",
+        "Resource": "arn:aws:bedrock:us-east-1::foundation-model/*"
+    }, {
+        "Effect": "Allow",
+        "Action": "s3:GetObject",
+        "Resource": "arn:aws:s3:::bedrock-fsa-loans-input/*"
+    }, {
+        "Effect": "Allow",
+        "Action": "sqs:SendMessage",
+        "Resource": "arn:aws:sqs:us-east-1:010928223403:bedrock-fsa-loans-sqs"
+    }]
+}
